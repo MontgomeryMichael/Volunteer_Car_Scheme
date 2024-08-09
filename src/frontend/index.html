@@ -1,0 +1,39 @@
+<!-- Html for the homepage.-->
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <title>Home Page</title>
+    <link rel="stylesheet" href="style.css" />
+  </head>
+  <body>
+    <h1>Volunteer Car Scheme</h1>
+    <form id="actualLoginForm">
+      <label for="username">Username:</label>
+      <input type="text" id="username" name="username" required /><br />
+      <p></p>
+      <label for="password">Password:</label>
+      <input type="password" id="password" name="password" required /><br />
+      <p></p>
+      <button type="submit">Login</button>
+    </form>
+    <p></p>
+    <button id="applyToRide" onclick="openApplyToRidePopup()">
+      Apply to Ride
+    </button>
+    <p></p>
+    <button id="applyToDrive" onclick="openApplyToDrivePopup()">
+      Apply to Drive
+    </button>
+
+    <script src="src/login.js"></script>
+    <script src="src/applyToRide.js"></script>
+    <script src="src/applyToDrive.js"></script>
+  </body>
+  <footer>
+    <p>Volunteer Car Scheme</p>
+    <p>Coordinator: Connor MacLeod</p>
+    <p>Telephone: 07000000000</p>
+    <p>Email: vcs@fakeemail.com</p>
+  </footer>
+</html>

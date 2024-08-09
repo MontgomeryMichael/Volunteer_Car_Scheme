@@ -1,0 +1,55 @@
+version: '3.9'
+
+services:
+  user_service:
+    build: ./user_service
+    ports:
+      - "5001:5001"
+    volumes:
+      - ./user_service:/app
+    environment:
+      - FLASK_ENV=development
+      
+  coordinator_service:
+    build: ./coordinator_service
+    ports:
+      - "5004:5004"
+    volumes:
+      - ./coordinator_service:/app
+    environment:
+      - FLASK_ENV=development
+
+  driver_service:
+    build: ./driver_service
+    ports:
+      - "5003:5003"
+    volumes:
+      - ./driver_service:/app
+    environment:
+      - FLASK_ENV=development
+
+  customer_service:
+    build: ./customer_service
+    ports:
+      - "5002:5002"
+    volumes:
+      - ./customer_service:/app
+    environment:
+      - FLASK_ENV=development
+
+  trip_service:
+    build: ./trip_service
+    ports:
+      - "5005:5005"
+    volumes:
+      - ./trip_service:/app
+    environment:
+      - FLASK_ENV=development
+
+  frontend:
+    build: ./frontend
+    ports:
+      - "5000:80"
+    volumes:
+      - ./frontend:/usr/share/nginx/html
+ 

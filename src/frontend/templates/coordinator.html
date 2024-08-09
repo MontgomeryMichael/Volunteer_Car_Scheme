@@ -1,0 +1,64 @@
+<!-- Html for the coordinator page -->
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <title>Coordinator</title>
+    <link rel="stylesheet" href="../style.css" />
+  </head>
+  <body>
+    <h1>Coordinator</h1>
+    <div>Welcome, <span id="usernameDisplay"></span>!</div>
+    <p></p>
+    <button id="pending-customer-registrations" onclick="pendingCustomer()">
+      Pending Customer Registrations
+    </button>
+    <p></p>
+    <button id="pending-driver-registrations" onclick="pendingDriver()">
+      Pending Driver Registrations
+    </button>
+    <p></p>
+    <button id="coordinatorTripRequests" onclick="openTripRequestsPopup()">
+      Trip Requests
+    </button>
+    <p></p>
+    <button id="coordinatorConfirmedTrips" onclick="openConfirmedTrips()">
+      Confirmed Trips
+    </button>
+    <p></p>
+    <button id="openManageCustomers" onclick="openManageCustomers()">
+      Manage Customers
+    </button>
+    <p></p>
+    <button id="openManageDrivers" onclick="openManageDrivers()">
+      Manage Drivers
+    </button>
+    <p></p>
+    <button id="logout" onclick="logout()">Logout</button>
+
+    <script>
+      document.addEventListener("DOMContentLoaded", function () {
+        const username = sessionStorage.getItem("username");
+        document.getElementById("usernameDisplay").textContent = username;
+      });
+    </script>
+    <script src="../src/pendingCustomers.js"></script>
+    <script src="../src/pendingDrivers.js"></script>
+    <script src="../src/coordinatorTripRequests.js"></script>
+    <script src="../src/coordinatorConfirmedTrips.js"></script>
+    <script src="../src/manageCustomers.js"></script>
+    <script src="../src/manageDrivers.js"></script>
+    <script>
+      function logout() {
+        sessionStorage.removeItem("username");
+        window.location.href = "../index.html";
+      }
+    </script>
+  </body>
+  <footer>
+    <p>Volunteer Car Scheme</p>
+    <p>Coordinator: Connor MacLeod</p>
+    <p>Telephone: 07000000000</p>
+    <p>Email: vcs@fakeemail.com</p>
+  </footer>
+</html>

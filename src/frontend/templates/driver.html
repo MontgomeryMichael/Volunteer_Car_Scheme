@@ -1,0 +1,43 @@
+<!-- Html page for driver homepage-->
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <title>Driver</title>
+    <link rel="stylesheet" href="../style.css" />
+  </head>
+  <body>
+    <h1>Driver</h1>
+    <div>Welcome, <span id="usernameDisplay"></span>!</div>
+    <p></p>
+    <button id="acceptTrip" onclick="openAcceptTrip()">Trip Requests</button>
+    <p></p>
+    <button id="viewTrips" onclick="openMyTripsPopup()">View Trips</button>
+    <p></p>
+    <button id="currentTrip" onclick="openCurrentTrips()">Current Trips</button>
+    <p></p>
+    <button id="logout" onclick="logout()">Logout</button>
+
+    <script>
+      document.addEventListener("DOMContentLoaded", function () {
+        const username = sessionStorage.getItem("username");
+        document.getElementById("usernameDisplay").textContent = username;
+      });
+    </script>
+    <script src="../src/acceptTrip.js"></script>
+    <script src="../src/myTripsDriver.js"></script>
+    <script src="../src/driverCurrentTrip.js"></script>
+    <script>
+      function logout() {
+        sessionStorage.removeItem("username");
+        window.location.href = "../index.html";
+      }
+    </script>
+  </body>
+  <footer>
+    <p>Volunteer Car Scheme</p>
+    <p>Coordinator: Connor MacLeod</p>
+    <p>Telephone: 07000000000</p>
+    <p>Email: vcs@fakeemail.com</p>
+  </footer>
+</html>

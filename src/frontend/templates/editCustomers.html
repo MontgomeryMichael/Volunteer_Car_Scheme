@@ -1,0 +1,88 @@
+<!-- Html to edit customers.-->
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <title>Edit Customer</title>
+    <style>
+      body {
+        font-family: Arial, sans-serif;
+      }
+    </style>
+  </head>
+  <body>
+    <h1>Edit Customer</h1>
+    <form id="editCustomer" onsubmit="updateCustomerDetails(event)">
+      <input type="text" name="username" placeholder="Username" />
+      <input type="password" name="password" placeholder="Password" />
+      <input type="text" name="first_name" placeholder="First Name" />
+      <input type="text" name="last_name" placeholder="Last Name" />
+      <input type="text" name="address_line1" placeholder="Address Line 1" />
+      <input type="text" name="address_line2" placeholder="Address Line 2" />
+      <input type="text" name="town" placeholder="Town" />
+      <input type="text" name="county" placeholder="County" />
+      <input type="text" name="postcode" placeholder="Postcode" />
+      <input type="text" name="mobile" placeholder="Mobile" />
+      <input type="email" name="email" placeholder="Email" />
+      <button type="submit">Submit</button>
+    </form>
+
+    <script>
+      async function fetchCustomerDetails() {
+        const urlParams = new URLSearchParams(window.location.search);
+        const customerId = urlParams.get("customerId");
+        if (customerId) {
+          const response = await fetch(
+            `http://localhost:5002/customers/${customerId}`
+          );
+          const customer = await response.json();
+          populateForm(customer);
+        }
+      }
+      function populateForm(customer) {
+        document.querySelector('[name="username"]').value =
+          customer.username || "";
+        document.querySelector('[name="password"]').placeholder =
+          "New Password";
+        document.querySelector('[name="first_name"]').value =
+          customer.first_name || "";
+        document.querySelector('[name="last_name"]').value =
+          customer.last_name || "";
+        document.querySelector('[name="address_line1"]').value =
+          customer.address_line1 || "";
+        document.querySelector('[name="address_line2"]').value =
+          customer.address_line2 || "";
+        document.querySelector('[name="town"]').value = customer.town || "";
+        document.querySelector('[name="county"]').value = customer.county || "";
+        document.querySelector('[name="postcode"]').value =
+          customer.postcode || "";
+        document.querySelector('[name="mobile"]').value = customer.mobile || "";
+        document.querySelector('[name="email"]').value = customer.email || "";
+      }
+      async function updateCustomerDetails(event) {
+        event.preventDefault();
+        const urlParams = new URLSearchParams(window.location.search);
+        const customerId = urlParams.get("customerId");
+        const formData = new FormData(document.getElementById("editCustomer"));
+        const formDataObj = Object.fromEntries(formData.entries());
+        const response = await fetch(
+          `http://localhost:5002/customers/${customerId}`,
+          {
+            method: "PUT",
+            headers: {
+              "Content-Type": "application/json",
+            },
+            body: JSON.stringify(formDataObj),
+          }
+        );
+        if (response.ok) {
+          alert("Customer details updated successfully.");
+          window.close();
+        } else {
+          alert("Failed to update customer details.");
+        }
+      }
+      document.addEventListener("DOMContentLoaded", fetchCustomerDetails);
+    </script>
+  </body>
+</html>

@@ -1,0 +1,114 @@
+<!-- Html for requesting a trip.-->
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+	<meta charset="UTF-8" />
+	<title>Trip Request</title>
+	<link
+	  rel="stylesheet"
+	  href="https://cdn.jsdelivr.net/npm/flatpickr/dist/flatpickr.min.css"
+	/>
+	<style>
+	  body {
+		font-family: Arial, sans-serif;
+	  }
+	</style>
+  </head>
+  <body>
+	<h1>Request Trip</h1>
+	<form id="tripRequest">
+	  <input type="hidden" name="customer_id" />
+	  <input
+		type="text"
+		name="date"
+		class="date"
+		required
+		placeholder="Select Date"
+	  />
+	  <p></p>
+	  <input
+		type="text"
+		name="time"
+		class="time"
+		required
+		placeholder="Select Time"
+	  />
+	  <p></p>
+	  <input
+		type="text"
+		name="destination"
+		placeholder="Destination"
+		maxlength="50"
+	  />
+	  <p></p>
+	  <input
+		type="text"
+		name="duration"
+		placeholder="Duration"
+		maxlength="50"
+	  />
+	  <p></p>
+	  <input
+		type="text"
+		name="additional_passenger"
+		placeholder="Additional Passenger"
+		maxlength="50"
+	  />
+	  <p></p>
+	  <textarea
+		name="purpose"
+		placeholder="Purpose"
+		maxlength="300"
+		required
+	  ></textarea>
+	  <p></p>
+	  <input type="hidden" name="status" value="Pending" />
+	  <p></p>
+	  <button type="submit">Submit</button>
+	</form>
+	<script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
+	<script src="../src/requestTrip.js"></script>
+	<script>
+	  async function getCustomerId(username) {
+		const response = await fetch(`http://localhost:5002/customers/details/${username}`);
+		if (!response.ok) {
+		  console.error("Failed to fetch customer details");
+		  return null;
+		}
+		const customerDetails = await response.json();
+		return customerDetails.customer_id;
+	  }
+
+	  function getUsernameFromUrl() {
+		const urlParams = new URLSearchParams(window.location.search);
+		return urlParams.get("username");
+	  }
+	  function getCustomerIdFromUrl() {
+		const urlParams = new URLSearchParams(window.location.search);
+		return urlParams.get("customer_id");
+	  }
+
+	  document.addEventListener("DOMContentLoaded", async function () {
+		const username = getUsernameFromUrl();
+		const customerId = getCustomerIdFromUrl();
+		if (customerId) {
+		  document.querySelector('input[name="customer_id"]').value = customerId;
+		} else if (username) {
+		  const customerId = await getCustomerId(username);
+		  if (customerId) {
+			document.querySelector('input[name="customer_id"]').value = customerId;
+		  }
+		}
+		flatpickr(".date", {
+		  enableTime: false,
+		  dateFormat: "Y-m-d",
+		});
+		flatpickr(".time", {
+		  enableTime: true,
+		  noCalendar: true,
+		  dateFormat: "H:i",
+		});
+	  });
+	</script>
+  </body>
+</html>

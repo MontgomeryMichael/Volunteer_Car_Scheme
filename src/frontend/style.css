@@ -1,0 +1,17 @@
+body {
+    font-family: Arial, sans-serif; 
+    background-color: lightblue;
+    background-image: url(logo.jpeg);
+    background-size: 250px 250px; 
+    background-repeat: no-repeat; 
+    background-position: top 40px right 40px; 
+}
+
+footer {
+    position: fixed;
+    bottom: 0;
+    width: 100%;
+    background-color: lightblue;
+    text-align: center;
+    padding: 10px;
+}

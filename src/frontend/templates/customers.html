@@ -1,0 +1,44 @@
+<!-- Html page for the customer. -->
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <title>Customer</title>
+    <link rel="stylesheet" href="../style.css" />
+  </head>
+  <body>
+    <h1>Customer</h1>
+    <div>Welcome, <span id="usernameDisplay"></span>!</div>
+    <p></p>
+    <button id="tripRequest" onclick="openRequestTrip()">Request Trip</button>
+    <p></p>
+    <button id="viewTrips" onclick="openMyTripsPopup()">View Trips</button>
+    <p></p>
+    <button id="viewCurrentTrips" onclick="openCustomerCurrentTripPopup()">
+      View Current Trips
+    </button>
+    <p></p>
+    <button id="logout" onclick="logout()">Logout</button>
+
+    <script>
+      document.addEventListener("DOMContentLoaded", function () {
+        const username = sessionStorage.getItem("username");
+        document.getElementById("usernameDisplay").textContent = username;
+      });
+    </script>
+    <script src="../src/requestTrip.js"></script>
+    <script src="../src/myTrips.js"></script>
+    <script src="../src/customerCurrentTrip.js"></script>
+    <script>
+      function logout() {
+        sessionStorage.removeItem("username");
+        window.location.href = "../index.html";
+      }
+    </script>
+  </body>
+  <footer>
+    <p>Coordinator: Connor MacLeod</p>
+    <p>Coordinator num: 07807807707</p>
+    <p>Email: vcs@fakeemail.com</p>
+  </footer>
+</html>

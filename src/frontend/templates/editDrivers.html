@@ -1,0 +1,86 @@
+<!-- Html to edit driver details.-->
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <title>Edit Driver</title>
+    <style>
+      body {
+        font-family: Arial, sans-serif;
+      }
+    </style>
+  </head>
+  <body>
+    <h1>Edit Driver</h1>
+    <form id="editDriver" onsubmit="updateDriverDetails(event)">
+      <input type="text" name="username" placeholder="Username" />
+      <input type="text" name="first_name" placeholder="First Name" />
+      <input type="text" name="last_name" placeholder="Last Name" />
+      <input type="text" name="license" placeholder="License" />
+      <input type="text" name="car_make" placeholder="Car Make" />
+      <input type="text" name="car_model" placeholder="Car Model" />
+      <input type="text" name="car_reg" placeholder="Car Registration" />
+      <input type="text" name="car_colour" placeholder="Car Colour" />
+      <input type="email" name="email" placeholder="Email" />
+      <input type="text" name="mobile" placeholder="Mobile" />
+      <button type="submit">Submit</button>
+    </form>
+
+    <script>
+      async function fetchDriverDetails() {
+        const urlParams = new URLSearchParams(window.location.search);
+        const driverId = urlParams.get("driverId");
+        if (driverId) {
+          const response = await fetch(
+            `http://localhost:5003/drivers/${driverId}`
+          );
+          const driver = await response.json();
+          populateForm(driver);
+        }
+      }
+      function populateForm(driver) {
+        document.querySelector('[name="username"]').value =
+          driver.username || "";
+        document.querySelector('[name="first_name"]').value =
+          driver.first_name || "";
+        document.querySelector('[name="last_name"]').value =
+          driver.last_name || "";
+        document.querySelector('[name="license"]').value = driver.license || "";
+        document.querySelector('[name="car_make"]').value =
+          driver.car_make || "";
+        document.querySelector('[name="car_model"]').value =
+          driver.car_model || "";
+        document.querySelector('[name="car_reg"]').value = driver.car_reg || "";
+        document.querySelector('[name="car_colour"]').value =
+          driver.car_colour || "";
+        document.querySelector('[name="email"]').value = driver.email || "";
+        document.querySelector('[name="mobile"]').value = driver.mobile || "";
+      }
+
+      async function updateDriverDetails(event) {
+        event.preventDefault();
+        const urlParams = new URLSearchParams(window.location.search);
+        const driverId = urlParams.get("driverId");
+        const formData = new FormData(document.getElementById("editDriver"));
+        const formDataObj = Object.fromEntries(formData.entries());
+        const response = await fetch(
+          `http://localhost:5003/drivers/${driverId}`,
+          {
+            method: "PUT",
+            headers: {
+              "Content-Type": "application/json",
+            },
+            body: JSON.stringify(formDataObj),
+          }
+        );
+        if (response.ok) {
+          alert("Driver details updated successfully.");
+          window.close();
+        } else {
+          alert("Failed to update driver details.");
+        }
+      }
+      document.addEventListener("DOMContentLoaded", fetchDriverDetails);
+    </script>
+  </body>
+</html>
